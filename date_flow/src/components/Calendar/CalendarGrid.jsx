@@ -3,11 +3,11 @@ import { HOLIDAY_BY_MONTH_DAY, WEEK_DAYS } from '../../utils/calendar'
 
 function CalendarGrid({ monthGrid, onDateClick, isStart, isEnd, isWithinRange }) {
   return (
-    <div className="grid grid-cols-7 gap-y-2 text-center">
+    <div className="grid grid-cols-7 gap-y-3 text-center">
       {WEEK_DAYS.map((day) => (
         <span
           key={day}
-          className="pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--muted)] sm:text-xs"
+          className="pb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--ink-soft)] sm:text-xs"
         >
           {day}
         </span>

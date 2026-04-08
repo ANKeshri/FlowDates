@@ -2,12 +2,18 @@
 @import 'tailwindcss';
 
 :root {
-	--paper: #f8f8f7;
+	--paper: #fcfbf7;
+	--paper-alt: #f4f7fb;
 	--ink: #17212b;
+	--ink-soft: #556170;
 	--accent: #1593d1;
-	--accent-soft: #d6eef9;
+	--accent-2: #233f67;
+	--accent-3: #d97706;
+	--accent-soft: #d9effc;
+	--accent-warm: #f6ead5;
 	--muted: #6f7c88;
-	--line: #d9dee3;
+	--line: #d9e0e7;
+	--line-strong: #b9c6d4;
 }
 
 * {
@@ -19,9 +25,10 @@ body {
 	font-family: 'Manrope', sans-serif;
 	color: var(--ink);
 	background:
-		radial-gradient(circle at 20% 20%, #ffffff 0%, rgba(255, 255, 255, 0.55) 35%, transparent 60%),
-		radial-gradient(circle at 80% 0%, #edf4fa 0%, transparent 45%),
-		linear-gradient(140deg, #eef3f7 0%, #dce4eb 45%, #e9edf2 100%);
+		radial-gradient(circle at 14% 18%, rgba(21, 147, 209, 0.14) 0%, transparent 26%),
+		radial-gradient(circle at 82% 10%, rgba(217, 119, 6, 0.14) 0%, transparent 22%),
+		radial-gradient(circle at 50% 90%, rgba(35, 63, 103, 0.12) 0%, transparent 28%),
+		linear-gradient(140deg, #eef3f7 0%, #e0e8ef 44%, #f5f2ec 100%);
 	min-height: 100vh;
 }
 
@@ -31,13 +38,35 @@ body {
 
 .paper-shadow {
 	box-shadow:
-		0 32px 46px -30px rgba(18, 26, 33, 0.6),
-		0 16px 24px -18px rgba(18, 26, 33, 0.45),
-		inset 0 1px 0 rgba(255, 255, 255, 0.85);
+		0 30px 50px -26px rgba(18, 26, 33, 0.46),
+		0 18px 28px -20px rgba(18, 26, 33, 0.24),
+		inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .calendar-enter {
 	animation: calendar-rise 560ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+.calendar-shell {
+	transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 420ms ease, border-color 420ms ease;
+	border-color: rgba(255, 255, 255, 0.9);
+}
+
+.calendar-shell:hover {
+	transform: translateY(-4px);
+	box-shadow:
+		0 36px 58px -28px rgba(18, 26, 33, 0.42),
+		0 24px 32px -20px rgba(18, 26, 33, 0.22),
+		inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.calendar-shell::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 20%);
+	opacity: 0.8;
 }
 
 @keyframes calendar-rise {
@@ -54,6 +83,69 @@ body {
 .month-title {
 	font-family: 'DM Serif Display', serif;
 	letter-spacing: 0.05em;
+}
+
+.calendar-month-title {
+	font-family: 'DM Serif Display', serif;
+	letter-spacing: 0.05em;
+	color: var(--accent-2);
+}
+
+.hero-video {
+	animation: hero-zoom 18s ease-in-out infinite alternate;
+	filter: saturate(1.12) contrast(1.05) brightness(0.95);
+	transform-origin: center;
+}
+
+.hero-sheen {
+	background: linear-gradient(
+		110deg,
+		rgba(255, 255, 255, 0) 15%,
+		rgba(255, 255, 255, 0.22) 48%,
+		rgba(255, 255, 255, 0) 82%
+	);
+	background-size: 220% 100%;
+	animation: sheen-pass 7s ease-in-out infinite;
+	mix-blend-mode: soft-light;
+}
+
+.hero-vignette {
+	background:
+		radial-gradient(circle at center, transparent 35%, rgba(6, 18, 34, 0.14) 100%),
+		linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(6, 18, 34, 0.28) 100%);
+}
+
+.calendar-divider {
+	background: linear-gradient(180deg, rgba(21, 147, 209, 0.12) 0%, rgba(35, 63, 103, 0.18) 100%);
+}
+
+.panel-in-left {
+	animation: slide-right 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.panel-in-right {
+	animation: slide-left 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+	animation-delay: 120ms;
+}
+
+.month-swap-shell {
+	will-change: transform, opacity;
+}
+
+.month-swap-next {
+	animation: month-swap-next 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.month-swap-prev {
+	animation: month-swap-prev 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.month-swap-title-next {
+	animation: title-sweep-next 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.month-swap-title-prev {
+	animation: title-sweep-prev 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* Interactive animations */
@@ -145,13 +237,87 @@ body {
 	}
 }
 
+@keyframes hero-zoom {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(1.08);
+	}
+}
+
+@keyframes sheen-pass {
+	0% {
+		background-position: 140% 0;
+		opacity: 0;
+	}
+	15% {
+		opacity: 0.4;
+	}
+	42% {
+		opacity: 0.15;
+	}
+	100% {
+		background-position: -120% 0;
+		opacity: 0;
+	}
+}
+
+@keyframes month-swap-next {
+	0% {
+		opacity: 0;
+		transform: translateX(28px) scale(0.985);
+		filter: blur(3px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0) scale(1);
+		filter: blur(0);
+	}
+}
+
+@keyframes month-swap-prev {
+	0% {
+		opacity: 0;
+		transform: translateX(-28px) scale(0.985);
+		filter: blur(3px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0) scale(1);
+		filter: blur(0);
+	}
+}
+
+@keyframes title-sweep-next {
+	0% {
+		opacity: 0;
+		transform: translateY(8px) translateX(18px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0) translateX(0);
+	}
+}
+
+@keyframes title-sweep-prev {
+	0% {
+		opacity: 0;
+		transform: translateY(8px) translateX(-18px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0) translateX(0);
+	}
+}
+
 /* Applied animations */
 .day-cell {
-	transition: all 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	transition: all 200ms cubic-bezier(0.34, 1.56, 0.64, 1), background-color 200ms ease, color 200ms ease;
 }
 
 .day-cell:hover {
-	transform: scale(1.08);
+	transform: scale(1.1);
 }
 
 .day-cell.selected {
@@ -209,6 +375,45 @@ body {
 	animation: float-in 200ms ease backwards;
 }
 
+.surface-warm {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(250, 247, 242, 0.98) 100%);
+}
+
+.surface-cool {
+	background: linear-gradient(180deg, rgba(248, 251, 255, 0.95) 0%, rgba(241, 246, 252, 0.98) 100%);
+}
+
+.surface-cream {
+	background: linear-gradient(180deg, rgba(255, 252, 246, 0.96) 0%, rgba(248, 242, 231, 0.97) 100%);
+}
+
+.accent-strip {
+	background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);
+}
+
+.tag-chip {
+	background: linear-gradient(180deg, rgba(35, 63, 103, 0.94) 0%, rgba(21, 147, 209, 0.92) 100%);
+	color: #fff;
+	box-shadow: 0 10px 20px -12px rgba(35, 63, 103, 0.7);
+}
+
+.small-label {
+	color: var(--ink-soft);
+	letter-spacing: 0.32em;
+}
+
+.soft-border {
+	border-color: var(--line-strong);
+}
+
 .calendar-grid-cell:nth-child(n+8) {
 	animation-delay: calc((var(--row, 0) * 70ms) + 50ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 1ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 1ms !important;
+	}
 }

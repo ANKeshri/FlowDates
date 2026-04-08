@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import CalendarGrid from './CalendarGrid'
 import RangeHighlight from './RangeHighlight'
 import NotesPanel from '../Notes/NotesPanel'
@@ -8,7 +9,8 @@ import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { formatMonthStorageKey } from '../../utils/calendar'
 
 function Calendar() {
-  const { activeMonth, monthGrid, monthLabel, goToNextMonth, goToPreviousMonth } = useCalendar()
+  const { activeMonth, setActiveMonth, monthGrid, monthLabel } = useCalendar()
+  const [transitionDirection, setTransitionDirection] = useState('next')
   const {
     selectedLabel,
     activeRangeKey,
@@ -26,6 +28,16 @@ function Calendar() {
   const monthKey = formatMonthStorageKey(activeMonth)
   const monthNotes = monthNotesByKey[monthKey] || ''
   const rangeNote = activeRangeKey ? rangeNotesByKey[activeRangeKey] || '' : ''
+
+  const goToPreviousMonth = () => {
+    setTransitionDirection('prev')
+    setActiveMonth((current) => new Date(current.getFullYear(), current.getMonth() - 1, 1))
+  }
+
+  const goToNextMonth = () => {
+    setTransitionDirection('next')
+    setActiveMonth((current) => new Date(current.getFullYear(), current.getMonth() + 1, 1))
+  }
 
   const onMonthNotesChange = (nextValue) => {
     setMonthNotesByKey((current) => ({
@@ -53,7 +65,7 @@ function Calendar() {
   )
 
   const calendarPanel = (
-    <section className="p-4 sm:p-6">
+    <section className={`month-swap-shell surface-cool p-4 sm:p-6 ${transitionDirection === 'next' ? 'month-swap-next' : 'month-swap-prev'}`}>
       <div className="mb-4 flex items-center justify-between gap-3">
         <button
           onClick={goToPreviousMonth}
@@ -62,7 +74,12 @@ function Calendar() {
           ← Prev
         </button>
 
-        <h2 className="month-title text-xl text-slate-900 sm:text-2xl transition-all duration-300">{monthLabel}</h2>
+        <h2
+          key={monthLabel}
+          className={`calendar-month-title text-xl text-slate-900 sm:text-2xl ${transitionDirection === 'next' ? 'month-swap-title-next' : 'month-swap-title-prev'}`}
+        >
+          {monthLabel}
+        </h2>
 
         <button
           onClick={goToNextMonth}

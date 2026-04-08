@@ -17,6 +17,7 @@ export function useCalendar() {
 
   return {
     activeMonth,
+    setActiveMonth,
     monthGrid,
     monthLabel,
     goToPreviousMonth,

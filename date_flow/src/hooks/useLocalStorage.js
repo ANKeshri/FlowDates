@@ -17,10 +17,6 @@ export function useLocalStorage(key, initialValue) {
   const [value, setValue] = useState(() => readStoredValue(key, initialValue))
 
   useEffect(() => {
-    setValue(readStoredValue(key, initialValue))
-  }, [key, initialValue])
-
-  useEffect(() => {
     try {
       window.localStorage.setItem(key, JSON.stringify(value))
     } catch {
