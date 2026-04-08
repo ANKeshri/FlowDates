@@ -54,21 +54,21 @@ function Calendar() {
 
   const calendarPanel = (
     <section className="p-4 sm:p-6">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex items-center justify-between gap-3">
         <button
           onClick={goToPreviousMonth}
-          className="rounded-md border border-[var(--line)] bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
+          className="month-nav-button rounded-md border border-[var(--line)] bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-[var(--accent)] hover:text-[var(--accent)] active:scale-95"
         >
-          Prev
+          ← Prev
         </button>
 
-        <h2 className="month-title text-xl text-slate-900 sm:text-2xl">{monthLabel}</h2>
+        <h2 className="month-title text-xl text-slate-900 sm:text-2xl transition-all duration-300">{monthLabel}</h2>
 
         <button
           onClick={goToNextMonth}
-          className="rounded-md border border-[var(--line)] bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
+          className="month-nav-button rounded-md border border-[var(--line)] bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-[var(--accent)] hover:text-[var(--accent)] active:scale-95"
         >
-          Next
+          Next →
         </button>
       </div>
 
